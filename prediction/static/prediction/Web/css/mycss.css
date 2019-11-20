@@ -1,0 +1,32 @@
+
+@font-face{
+	font-family: myFont;
+	src:url("/Library/Fonts/Verdana Bold Italic.ttf");
+}
+body{
+	/*font-family: myFont;*/
+
+}
+.title{
+	font-size: 30px;
+	border: 1px solid black;
+	margin: 0 auto;
+	text-align: center;
+	background-color: #a2a9af;
+}
+.col1{
+	background-color: white;
+}
+.col2{
+	background-color: #a39e9e;
+}
+.mytable{
+	background-color: gray;
+	caption-side: inherit;
+	text-align: center;
+	align-items: center;
+	margin: 0 auto;		
+	border: 1px solid #a39e9e;
+	font-size: 20px;
+
+}
