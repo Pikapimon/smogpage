@@ -1,0 +1,91 @@
+
+@font-face{
+	font-family: myFont;
+	src:url("/Library/Fonts/Verdana Bold Italic.ttf");
+}
+a {
+		text-decoration-line: none;
+	}
+	*{
+		margin:0px;
+		text-align: center;
+		font-family: myFont;
+	}
+
+	.items{
+		width: 100%;
+		color: rgb(0,0,0);
+	}
+	.item{
+		float:left;
+		width: 20%;
+		font-family: myFont;
+	}
+	.item h4{
+		color: rgb(255,255,255);
+		background-color: rgba(49,49,49,1);
+		padding-top: 20px;
+		height:30px;
+		font-size: 20px;
+	}
+
+
+	.subtitle1{
+
+	}
+	
+	.details {
+		float: left;
+		width: 20%;
+		background-color: rgb(128,128,128);
+		display: none;
+	}
+
+	.details p{
+		width: 100%;
+		font-size: 20px;
+		color: rgb(255,255,255);
+		height: 50px;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		visibility: block;
+	}
+
+
+	.item img{
+		height:30px;
+		padding-top: 20px;
+		background-color:rgba(49,49,49,1);
+		padding-left: 50%;
+		padding-right: 50%
+	}
+
+   /*selected*/
+   /*	.item_selected{
+		color: rgb(0,0,0);
+		float:left;
+		width: 20%
+	}
+	.item_selected h4{
+		color: rgb(0,0,0);
+		background-color: rgba(255,255,255,1);
+		padding-top: 10%;
+		height:30px;
+		font-size: 20px;
+	}
+	.item_selected:hover p {
+	  background-color: rgb(128, 128, 128);
+	  height: 40px;
+	  transition: height 0.5s;
+	  visibility: visible
+	}
+	
+	.item_selected p{
+		visibility: hidden;
+		height: 0;
+		font-size: 20px;
+		color:rgb(255,255,255);
+		padding-top: 10%;
+		padding-bottom: 0%
+
+	}*/
