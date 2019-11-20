@@ -1,16 +1,15 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 	<meta charset="UTF-8">
 	<title>Homepage</title>
-	{% load static %}
+	
 	<link rel="stylesheet" type="text/css" href="{% static 'prediction/Web/css/bootstrap-4.0.0-dist/css/bootstrap.min.css' %}">
-	{% load static %}	
 	<script src='{% static "prediction/Web/javascript/jquery-3.4.1.js" %}'></script>
-	{% load static %}	
+
 	<script src="{% static 'prediction/Web/css/bootstrap-4.0.0-dist/js/bootstrap.min.js' %}"></script>
-	{% load static %}
-	<script sec='{% static "prediction/poppulation.js" %}'></script>
+	<script src='{% static "prediction/poppulation.js" %}'></script>
 	<style>
 		h3{
 			border: 0px solid black;
@@ -56,7 +55,7 @@
 
 <body>
 
-	{# <div id="head-pic" style="background-image: url('/static/pictures/smog.jpg'); height: 400px;"> #}
+	<div id="head-pic" style="background-image: url({% static 'prediction/pictures/smog.jpg'  %}); height: 400px;">
 		<h1 class="display-4 text-center font-weight-bold text-capitalize text-dark" style="padding-top: 130px;">platform of smog monitoring & prediction</h1>
 		<h3 class="text-center text-uppercase text-dark font-italic">nuist</h3>
 	</div>

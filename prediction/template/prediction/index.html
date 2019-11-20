@@ -1,15 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 	<meta charset="UTF-8">
 	<title>Homepage</title>
-	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'prediction/Web/css/bootstrap-4.0.0-dist/css/bootstrap.min.css' %}">
 
 	<script src='{% static "prediction/Web/javascript/jquery-3.4.1.js" %}'></script>
-
 	<script src="{% static 'prediction/Web/css/bootstrap-4.0.0-dist/js/bootstrap.min.js' %}"></script>
-
 	<script src='{% static "prediction/poppulation.js" %}'></script>
 	<style>
 	h3{
@@ -100,7 +98,6 @@
 			</div>
 			<div class="card-body" style="">
 				<div class="row">
-					<iframe src="/static/heat/2018-01-01.html" frameborder="0" class="col-sm-12 col-xl-8" style="height: 550px;" scrolling="no"></iframe>
 					<div class="col-sm-12 col-xl-4">
 						<div class="row">
 							<h3 class="col-8">Specific data</h3>
