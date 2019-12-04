@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'TestModel',
     'polls',
     'prediction',
+    'datacode',
 ]
 
 MIDDLEWARE = [
