@@ -5,49 +5,48 @@
 	<meta charset="UTF-8">
 	<title>Homepage</title>
 	
-	<link rel="stylesheet" type="text/css" href="{% static 'prediction/Web/css/bootstrap-4.0.0-dist/css/bootstrap.min.css' %}">
-	<script src='{% static "prediction/Web/javascript/jquery-3.4.1.js" %}'></script>
-
-	<script src="{% static 'prediction/Web/css/bootstrap-4.0.0-dist/js/bootstrap.min.js' %}"></script>
-	<script src='{% static "prediction/poppulation.js" %}'></script>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<style>
-		h3{
-			border: 0px solid black;
-		}
-		.table thead th:first-child{
-			display:inline-block;
-			width: 33%;
-		}
-		.table thead th:nth-child(2){
-			display:inline-block;
-			width: 27%;
-		}
-		.table thead th:last-child{
-			display:inline-block;
-			width: 40%;
-		}
-		.table tbody{
-			height: 430px;
-			display: block;
-			overflow-y: auto;
-			width: 100%
-		}
-		tbody tr{
-			display: block;
-		}
-		.table tbody tr td:first-child{
-			display:inline-block;
-			width: 33%;
-		}
-		.table tbody tr td:nth-child(2){
-			display:inline-block;
-			width: 24%;
-		}
-		.table tbody tr td:last-child{
-			display:inline-block;
-			width: 35%;
-		}
-		.element::-webkit-scrollbar { display: none;}
+	h3{
+		border: 0px solid black;
+	}
+	.table thead th:first-child{
+		display:inline-block;
+		width: 33%;
+	}
+	.table thead th:nth-child(2){
+		display:inline-block;
+		width: 27%;
+	}
+	.table thead th:last-child{
+		display:inline-block;
+		width: 40%;
+	}
+	.table tbody{
+		height: 430px;
+		display: block;
+		overflow-y: auto;
+		width: 100%
+	}
+	tbody tr{
+		display: block;
+	}
+	.table tbody tr td:first-child{
+		display:inline-block;
+		width: 33%;
+	}
+	.table tbody tr td:nth-child(2){
+		display:inline-block;
+		width: 24%;
+	}
+	.table tbody tr td:last-child{
+		display:inline-block;
+		width: 35%;
+	}
+	.element::-webkit-scrollbar { display: none;}
 
 
 	</style>
@@ -80,13 +79,6 @@
 			</ul>
 		</nav>
 	</div>
-
-	<!-- search area -->
-<!-- 	<div class="container" style="margin-top: 20px">
-		<div class="row">
-			<h1><kbd>Search area</kbd></h1>
-		</div>
-	</div> -->
 	<br>
 	<!-- CONTAINER1  -->
 	<div class="container" id="distribution">
@@ -202,7 +194,7 @@
 					<h1 class="col-sm-12 col-lg-8 text-center">History Province</h1>
 					<form action="" class="form-inline col-sm-12 col-lg-4">
 						<input type="text" class="col-sm-8  form-control" placeholder="e.g.(2019-01-01)">
-						<button type="submit" class="btn btn-primary col-sm-4">Search</button>
+						<button type="button" class="btn btn-primary col-sm-4" id="history-province-search">Search</button>
 					</form>
 				</div>
 			</div>
@@ -423,7 +415,6 @@
 					</div>
 					<div class="card-body">
 						<div class="row">
-							{# <iframe src="resources/line/kline.html" frameborder="0" class="col-12" style="height: 550px;"></iframe> #}
 						</div>
 					</div>
 				</div>
@@ -459,5 +450,11 @@
 		</div>
 	</div>
 </body>
-
+<script>
+	$("#history-province-search").click(function(){
+		$.getJSON("ajax-province-refresh/",function(ret){
+			alert(ret.twz);
+		})
+	})
+</script>
 </html>
