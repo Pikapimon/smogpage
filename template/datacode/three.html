@@ -9,30 +9,43 @@
 </head>
 <body>
 	<div>
-		<div class="col-md-6 col-sm-8" style="margin: 0;padding: 0;">
-			<input type="file" name="" class="col-md-6 col-sm-8 form-control">
-		</div>
-		<button class="btn btn-success">提交</button>
+		<form class="col-md-6 col-sm-8" style="margin: 0;padding: 0;" enctype="multipart/form-data">
+			
+			<input type="file" name="" class="col-md-6 col-sm-8 form-control" id="file">
+		</form>
+		<button class="btn btn-success" id="btn">提交</button>
+		<img src="" class="img-thumbnail imgstyle">
 	</div>
 	<!-- 表格 -->
-	<div style="min-width: 20px;">
-		
-	</div>
-	<div>
-		<div style="display: inline-block;">
-			<img src="1.jpg" class="img-thumbnail imgstyle">
-		</div>
-		<div style="display: inline-block;">
-			<img src="1.jpg" class="img-thumbnail imgstyle">
-		</div>
-		<div style="display: inline-block;">
-			<img src="1.jpg" class="img-thumbnail imgstyle">
-		</div>
-	</div>
+
+
 	<style type="text/css">
-		.imgstyle{
-			max-width: 400px;
-		}
+	.imgstyle{
+		max-width: 400px;
+	}
 	</style>
+	<script>
+	$(function(){
+		$("#btn").click(function(){
+
+			var form_data = new FormData();
+			form_data.append("file" , $("#file").prop("files")[0]);
+			$.ajax({
+				type : "POST",
+				url : "{% url 'datacode:thpage' %}",
+				data : form_data,
+				processData : false,
+				contentType : false,
+				success : function(ret){
+					ret = JSON.parse(ret);
+					console.info(ret);
+				}
+			});
+
+
+		});
+	});
+
+	</script>
 </body>
 </html>

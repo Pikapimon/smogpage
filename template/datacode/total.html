@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>多级调度</title>
+	<link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -19,7 +20,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#btn1").click(function(){
-				$("iframe").attr('src',"{% url 'datacode:first_frame' %}");
+				$("iframe").attr('src','{% url "datacode:first_frame" %}');
 				for(var i = 1; i < 4; i++ ){
 					$("#btn"+i).removeClass("btn-warning");
 				}
@@ -30,7 +31,7 @@
 				$("#btn1").addClass("btn-warning");
 			})
 			$("#btn2").click(function(){
-				$("iframe").attr('src','second.html');
+				$("iframe").attr('src','{% url "datacode:second_frame" %}');
 				for(var i = 1; i < 4; i++ ){
 					$("#btn"+i).removeClass("btn-warning");
 				}
@@ -42,7 +43,7 @@
 				
 			})
 			$("#btn3").click(function(){
-				$("iframe").attr('src','three.html');
+				$("iframe").attr('src','{% url "datacode:third_frame" %}');
 				for(var i = 1; i < 4; i++ ){
 					$("#btn"+i).removeClass("btn-warning");
 				}

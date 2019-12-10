@@ -10,21 +10,21 @@
 <body>
 	<div>
 		<div class="col-md-6 col-sm-8" style="margin: 0;padding: 0;">
-			<input type="file" name="" class="col-md-6 col-sm-8 form-control">
+			<input type="file" name="" class="col-md-6 col-sm-8 form-control" id="file">
 		</div>
 		<div class="input-group col-md-2 col-sm-3">
 			<span class="input-group-addon">K值</span>
-			<input type="text" name="" class="form-control">
+			<input type="text" name="" class="form-control" id="Kvalue">
 		</div>
 		<div class="col-md-2 col-sm-3" style="margin: 0;padding: 0;" style="display: inline-block;">
-		<select class="form-control">
+		<select class="form-control" id="selectfunction">
 			<option>K-means</option>
 			<option>PAM</option>			
 		</select>
 		</div>
-		<button class="btn btn-success" style="margin-left: 20px;">提交</button>
+		<button class="btn btn-success" style="margin-left: 20px;" id="btn">提交</button>
 	</div>
-	<img src="1.jpg" class="img-thumbnail imgstyle">
+	<img src="" class="img-thumbnail imgstyle">
 
 
 	<style type="text/css">
@@ -33,5 +33,29 @@
 			width: 650px;
 		}
 	</style>
+	
+	<script>
+		$(function(){
+			$("#btn").click(function(){
+				var form_data = new FormData();
+				form_data.append('function',$("#selectfunction").val());
+				form_data.append('Kvalue',$("#Kvalue").val());
+				form_data.append('file',$("#file").prop("files")[0]);
+				$.ajax({
+					type : 'POST',
+					url : "{% url 'datacode:secpage' %}",
+					data : form_data,
+					processData : false,
+					contentType : false,
+					success : function(result){
+						alert(result)
+					}
+				})
+			});
+		});
+		
+
+	</script>
+
 </body>
 </html>
