@@ -1,80 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>多级调度</title>
-	<link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<title></title>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div id="nav" class="col-md-12">
-		<button class=" btn btn-warning" id="btn1">关联规则挖掘</button>
-		<button class=" btn btn-default" id="btn2">支持向量机分类</button>
-		<button class=" btn btn-default" id="btn3">数据聚类</button>
+		<button class=" btn btn-primary" onclick="toPage(1)">Apriori关联挖掘</button>
+		<button class=" btn btn-outline-primary" onclick="toPage(2)">FP-growth关联挖掘</button>
+		<button class=" btn btn-outline-primary" onclick="toPage(3)">支持向量机分类</button>
+		<button class=" btn btn-outline-primary" onclick="toPage(4)">K-means聚类</button>
+		<button class=" btn btn-outline-primary" onclick="toPage(5)">K-中心点聚类</button>
+
 	</div>
 	<div>
 		<iframe src="{% url 'datacode:first_frame' %}" border="0" marginwidth="0" marginheight="0"frameborder="0" scrolling="hidden" height="600px" width="80%">
 		</iframe>
 	</div>	
+
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$("#btn1").click(function(){
-				$("iframe").attr('src','{% url "datacode:first_frame" %}');
-				for(var i = 1; i < 4; i++ ){
-					$("#btn"+i).removeClass("btn-warning");
-				}
-				for(var i = 1; i < 4; i++ ){
-					$("#btn"+i).addClass("btn-default");
-				}
-				$("#btn1").removeClass("btn-default");
-				$("#btn1").addClass("btn-warning");
-			})
-			$("#btn2").click(function(){
-				$("iframe").attr('src','{% url "datacode:second_frame" %}');
-				for(var i = 1; i < 4; i++ ){
-					$("#btn"+i).removeClass("btn-warning");
-				}
-				for(var i = 1; i < 4; i++ ){
-					$("#btn"+i).addClass("btn-default");
-				}
-				$("#btn2").removeClass("btn-default");
-				$("#btn2").addClass("btn-warning");
-				
-			})
-			$("#btn3").click(function(){
-				$("iframe").attr('src','{% url "datacode:third_frame" %}');
-				for(var i = 1; i < 4; i++ ){
-					$("#btn"+i).removeClass("btn-warning");
-				}
-				for(var i = 1; i < 4; i++ ){
-					$("#btn"+i).addClass("btn-default");
-				}
-				$("#btn3").removeClass("btn-default");
-				$("#btn3").addClass("btn-warning");
-				
-			})
-		});
+	$(document).ready(function(){
+		$("button").click(function(){
+			$("button").removeClass("btn-primary");
+			$("button").addClass('btn-outline-primary');
+			$(this).removeClass("btn-outline-primary");
+			$(this).addClass('btn-primary');
+		})
+
+	});
+	function toPage(num){
+		$("button").removeClass("btn-primary");
+		$("button").addClass('btn-outline-primary');
+		$(this).removeClass("btn-outline-primary");
+		$(this).addClass('btn-primary');
+		console.log('changeTo '+num)
+		if(num==1){
+			$('iframe').attr('src',"{% url 'datacode:first_frame' %}")
+		}else if(num==2){
+			$('iframe').attr('src',"{% url 'datacode:second_frame' %}")
+		}else if(num==3){
+			$('iframe').attr('src',"{% url 'datacode:third_frame' %}")
+			
+		}else if(num==4){
+			$('iframe').attr('src',"{% url 'datacode:forth_frame' %}")
+		}else{
+			$('iframe').attr('src',"{% url 'datacode:fifth_frame' %}")
+		}
+	}
 	</script>
 	<style type="text/css">
-		#nav{
-			margin: 30px;
-			padding: 5px;
-			width: 85%;
-			-moz-box-shadow: 2px 2px 10px #909090;
-			-webkit-box-shadow: 2px 2px 10px #909090;
-			box-shadow:2px 2px 10px #909090;
-		}
-		button{
-			margin-right: 10px; 
-		}
-		iframe{
-			margin-left: 5%;
-			-moz-box-shadow: 2px 2px 10px #909090;
-			-webkit-box-shadow: 2px 2px 10px #909090;
-			box-shadow:2px 2px 10px #909090;
-			padding: 20px;
-		}
+	#nav{
+		margin: 30px;
+		padding: 5px;
+		width: 85%;
+		-moz-box-shadow: 2px 2px 10px #909090;
+		-webkit-box-shadow: 2px 2px 10px #909090;
+		box-shadow:2px 2px 10px #909090;
+	}
+	button{
+		margin-right: 10px; 
+	}
+	iframe{
+		margin-left: 5%;
+		-moz-box-shadow: 2px 2px 10px #909090;
+		-webkit-box-shadow: 2px 2px 10px #909090;
+		box-shadow:2px 2px 10px #909090;
+		padding: 20px;
+	}
 	</style>
 </body>
 </html>

@@ -1,57 +1,80 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
 	<title></title>
-	<link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="shortcut icon" href="{% static 'favicon_io/favicon.ico' %}">
+	<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<style type="text/css">
 	.imgstyle{
 		height: 430px;
 		width: 650px;
 	}
+
 	</style>
 </head>
 <body>
 
-	<div>
-		<form class="col-md-6 col-sm-8" style="margin: 0;padding: 0;" enctype="multipart/form-data">{% csrf_token %}
-			
-			<input type="file" name="" class="col-md-6 col-sm-8 form-control" id="file">
-		</form>
-		<button class="btn btn-success" id="btn">提交</button>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<form   enctype="multipart/form-data">
+					<div class="row">
+						<div class="col-3">
+							<input type="file" name="" class="form-control" id="file">
+						</div>
+						<div class="col-3">
+							<input type="text" placeholder="输入最小支持度" class="form-control" id = 'sup'>
+						</div>
+						<div class="col-3">
+							<input type="text" placeholder="输入最小置信度" class="form-control" id="con">
+						</div>
+						<div class="col-3 text-center">
+							<button type="button" class="btn btn-success" id="btn">提交</button>
+						</div>
+					</div>
+				</form>			
+			</div>
+		</div>
 	</div>
-	<!-- 表格 -->
-	<div style="min-width: 20px;">
-		
+	<div class="container" style="padding-top:50px;">
+		<div class="row">
+			<div class="col-12">
+				<table class="table table-hover">
+					<thead>
+						<tr><th>项集1</th><th>项集2</th><th>置信度</th></tr>
+					</thead>
+					<tbody id='show'>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
-	<img src="" class="img-thumbnail imgstyle" id="nextimg">
-
-
 
 	<script>
 	$(function(){
 		$("#btn").click(function(){
-			
-			var form_data = new FormData();
-			form_data.append("file" , $("#file").prop("files")[0]);
+			var formdata = new FormData();
+			formdata.append('file',$("#file").prop('files')[0]);
+			formdata.append('sup',$('#sup').val());
+			formdata.append('con',$('#con').val());
 			$.ajax({
-				type : "POST",
-				url : "{% url 'datacode:upload' %}",
-				data : form_data,
-				processData : false,
-				contentType : false,
-				success : function(ret){
-					ret = JSON.parse(ret);
-					console.info(ret);
+				url: '{% url "datacode:upload1" %}',
+				type: 'POST',
+				data: formdata,
+				cache: false,
+				processData: false,
+				contentType: false,
+				success :function(ret){
+					console.log(ret);
 				}
 			});
-			
-
 		});
 	});
-	
+
 	</script>
 </body>
 </html>

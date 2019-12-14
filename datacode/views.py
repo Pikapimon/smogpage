@@ -22,14 +22,25 @@ def three(request):
     return render(request, 'datacode/three.html')
 
 
+def four(request):
+    return render(request, 'datacode/four.html')
+
+
+def five(request):
+    return render(request, 'datacode/five.html')
+
 # 第一个页面
+
+
 def sendfirstdata(request):
     if request.method == 'GET':
         # 处理函数
+        a = request.dict()
 
+        return HttpResponse(json.dumps(a))
         # 返回结果
         return HttpResponse(json.dumps({
-            'imgpath':  '',
+            'imgpath':  'sd',
             'name': 'hurui'
         }))
 
@@ -40,10 +51,8 @@ def sendfirstdata(request):
         data.save()
 
         # 处理
-
-        return HttpResponse(json.dumps({
-            'imgpath': '/'
-        }))
+        a = request.POST.dict()
+        return HttpResponse(json.dumps(a))
     return render(request, 'datacode/total.html')
 
 
