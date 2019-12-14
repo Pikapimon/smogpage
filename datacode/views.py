@@ -42,7 +42,7 @@ def sendfirstdata(request):
         # 处理
 
         return HttpResponse(json.dumps({
-            'result': '我收到了'
+            'imgpath': '/'
         }))
     return render(request, 'datacode/total.html')
 

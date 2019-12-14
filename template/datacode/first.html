@@ -6,12 +6,18 @@
 	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style type="text/css">
+	.imgstyle{
+		height: 430px;
+		width: 650px;
+	}
+	</style>
 </head>
 <body>
 
 	<div>
 		<form class="col-md-6 col-sm-8" style="margin: 0;padding: 0;" enctype="multipart/form-data">{% csrf_token %}
-		
+			
 			<input type="file" name="" class="col-md-6 col-sm-8 form-control" id="file">
 		</form>
 		<button class="btn btn-success" id="btn">提交</button>
@@ -23,34 +29,29 @@
 	<img src="" class="img-thumbnail imgstyle" id="nextimg">
 
 
-	<style type="text/css">
-		.imgstyle{
-			height: 430px;
-			width: 650px;
-		}
-	</style>
-	<script>
-		$(function(){
-			$("#btn").click(function(){
-				
-				var form_data = new FormData();
-				form_data.append("file" , $("#file").prop("files")[0]);
-				$.ajax({
-					type : "POST",
-					url : "{% url 'datacode:upload' %}",
-					data : form_data,
-					processData : false,
-					contentType : false,
-					success : function(ret){
-						ret = JSON.parse(ret);
-						console.info(ret);
-					}
-				});
-				
 
+	<script>
+	$(function(){
+		$("#btn").click(function(){
+			
+			var form_data = new FormData();
+			form_data.append("file" , $("#file").prop("files")[0]);
+			$.ajax({
+				type : "POST",
+				url : "{% url 'datacode:upload' %}",
+				data : form_data,
+				processData : false,
+				contentType : false,
+				success : function(ret){
+					ret = JSON.parse(ret);
+					console.info(ret);
+				}
 			});
+			
+
 		});
-		
+	});
+	
 	</script>
 </body>
 </html>
