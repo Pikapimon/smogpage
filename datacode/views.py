@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 # Create your views here.
 import json
 import os
 from .models import Data
+from .process.console import *
+from django.conf import settings
 
 
 def total(request):
@@ -51,8 +54,13 @@ def sendfirstdata(request):
         data.save()
 
         # 处理
-        a = request.POST.dict()
-        return HttpResponse(json.dumps(a))
+        pro = process(os.path.join(
+            settings.BASE_DIR, 'data.xlsx'), 1, [0.4, 0.4])
+        a = list(pro.start())
+        # 返回的结果为一个列表，每个项为三元组
+
+        # a = [["{草莓,速度}", "{11,22}", "0.5"], ["{草莓,3}", "{13,22}", "0.5"]]
+        return HttpResponse(json.dumps(a), content_type="application/json,charset=utf8")
     return render(request, 'datacode/total.html')
 
 

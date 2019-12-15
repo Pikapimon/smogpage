@@ -43,7 +43,7 @@
 	<div class="container" style="padding-top:50px;">
 		<div class="row">
 			<div class="col-12">
-				<table class="table table-hover">
+				<table class="table table-hover table-striped table-bordered">
 					<thead>
 						<tr><th>项集1</th><th>项集2</th><th>置信度</th></tr>
 					</thead>
@@ -69,7 +69,14 @@
 				processData: false,
 				contentType: false,
 				success :function(ret){
-					console.log(ret);
+					for(var i in ret){
+						var row = $("<tr></tr>");
+						row.append("<td>"+ret[i][0]+"</td>")
+						row.append("<td>"+ret[i][1]+"</td>")
+						row.append("<td>"+ret[i][2]+"</td>")
+						$("#show").append(row);
+					}
+
 				}
 			});
 		});
