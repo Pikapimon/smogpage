@@ -52,14 +52,26 @@ def sendfirstdata(request):
         # 保存上传的文件
         data = Data(name=files.name, files=files)
         data.save()
-
+        sup = float(request.POST['sup'])
+        con = float(request.POST['con'])
         # 处理
         pro = process(os.path.join(
-            settings.BASE_DIR, 'data.xlsx'), 1, [0.4, 0.4])
-        a = list(pro.start())
-        # 返回的结果为一个列表，每个项为三元组
-
-        # a = [["{草莓,速度}", "{11,22}", "0.5"], ["{草莓,3}", "{13,22}", "0.5"]]
+            settings.BASE_DIR, 'data.xlsx'), 1, [sup, con])
+        a, b = (pro.start())
+        # a返回的结果为频繁项集
+        print(b)
+        result = []
+        for keys in b:
+            tmp = []
+            tmp.append(list(list(keys)[0]))
+            tmp.append(list(list(keys)[1]))
+            print(b[keys].keys())
+            tmp.append(b[keys]['confidence：'])
+            tmp.append(b[keys]['support:'])
+            tmp.append(b[keys]['lift:'])
+            print(keys, b[keys])
+            result.append(tmp)
+        a = [a, result]
         return HttpResponse(json.dumps(a), content_type="application/json,charset=utf8")
     return render(request, 'datacode/total.html')
 

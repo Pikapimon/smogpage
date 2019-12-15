@@ -59,11 +59,9 @@ class apriori:
     def start(self):
         ci = []
         fi = []
-        # print(self.min_sup)
         for i in self.transac:
             ci = list(set(ci) | set(i))
         ci.sort()
-        self.min_sup *= len(ci)
         for i in ci:
             sup = self.get_sup([i])
             if sup >= self.min_sup:
@@ -90,8 +88,6 @@ class apriori:
             for j in range(lenrow):
                 # 得到一个小集合的所有子集，均满足min_sup条件
                 tmp_subs = self.getAllSubSets(self.f[i][j][0])
-                # print(self.f[i][j][0])
-                # print("tmp_subs：", tmp_subs)
                 lencol = len(tmp_subs)
                 k = 0
                 while k < lencol:

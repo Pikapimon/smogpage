@@ -20,36 +20,38 @@
 		<div class="row">
 			<form class="col-12">
 				<div class="row">
-					<div class="col-6"><input type="file" name="" class="form-control" id="file"></div>
+					<div class="col-2">							
+						<input type="file" name="" class="form-control" id="file" style="display: none;">
+						<button type="button" class='btn btn-outline-secondary' onclick="clickFile()">上传文件</button>
+					</div>
 					<div class="col-3"><input type="text" class="form-control" placeholder="输入K值"></div>
 					<div class="col-3 text-center"><button type="button" class="btn btn-success" id="btn">提交</button></div>
 				</div>
 			</form>
 		</div>
 	</div>
+</body>
+<script>
+$(function(){
+	$("#btn").click(function(){
 
-	<script>
-	$(function(){
-		$("#btn").click(function(){
-
-			var form_data = new FormData();
-			form_data.append("file" , $("#file").prop("files")[0]);
-			$.ajax({
-				type : "POST",
-				url : "{% url 'datacode:thpage' %}",
-				data : form_data,
-				processData : false,
-				contentType : false,
-				success : function(ret){
-					ret = JSON.parse(ret);
-					console.info(ret);
-				}
-			});
-
-
+		var form_data = new FormData();
+		form_data.append("file" , $("#file").prop("files")[0]);
+		$.ajax({
+			type : "POST",
+			url : "{% url 'datacode:thpage' %}",
+			data : form_data,
+			processData : false,
+			contentType : false,
+			success : function(ret){
+				ret = JSON.parse(ret);
+				console.info(ret);
+			}
 		});
 	});
-
-	</script>
-</body>
+});
+function clickFile(){
+	$("input[type='file']").click();
+}
+</script>
 </html>

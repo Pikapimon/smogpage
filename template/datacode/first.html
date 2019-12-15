@@ -9,10 +9,10 @@
 	<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<style type="text/css">
-	.imgstyle{
-		height: 430px;
-		width: 650px;
-	}
+		.imgstyle{
+			height: 430px;
+			width: 650px;
+		}
 
 	</style>
 </head>
@@ -23,8 +23,9 @@
 			<div class="col-12">
 				<form   enctype="multipart/form-data">
 					<div class="row">
-						<div class="col-3">
-							<input type="file" name="" class="form-control" id="file">
+						<div class="col-2">
+							<input type="file" name="" class="form-control" id="file" style="display: none;">
+							<button type="button" class='btn btn-outline-secondary' onclick="clickFile()">上传文件</button>
 						</div>
 						<div class="col-3">
 							<input type="text" placeholder="输入最小支持度" class="form-control" id = 'sup'>
@@ -32,7 +33,7 @@
 						<div class="col-3">
 							<input type="text" placeholder="输入最小置信度" class="form-control" id="con">
 						</div>
-						<div class="col-3 text-center">
+						<div class="col-1 text-center">
 							<button type="button" class="btn btn-success" id="btn">提交</button>
 						</div>
 					</div>
@@ -43,11 +44,20 @@
 	<div class="container" style="padding-top:50px;">
 		<div class="row">
 			<div class="col-12">
+				<h1>频繁项集</h1>
 				<table class="table table-hover table-striped table-bordered">
 					<thead>
-						<tr><th>项集1</th><th>项集2</th><th>置信度</th></tr>
+						<tr><th>频繁项集</th><th>频数</th></tr>
 					</thead>
 					<tbody id='show'>
+					</tbody>
+				</table>
+				<h1>关联规则</h1>
+				<table class="table table-hover table-striped table-bordered">
+					<thead>
+						<tr><th>项集1</th><th>项集2</th><th>置信度</th><th>支持度</th><th>提升系数</th></tr>
+					</thead>
+					<tbody id='show2'>
 					</tbody>
 				</table>
 			</div>
@@ -55,33 +65,53 @@
 	</div>
 
 	<script>
-	$(function(){
-		$("#btn").click(function(){
-			var formdata = new FormData();
-			formdata.append('file',$("#file").prop('files')[0]);
-			formdata.append('sup',$('#sup').val());
-			formdata.append('con',$('#con').val());
-			$.ajax({
-				url: '{% url "datacode:upload1" %}',
-				type: 'POST',
-				data: formdata,
-				cache: false,
-				processData: false,
-				contentType: false,
-				success :function(ret){
-					for(var i in ret){
-						var row = $("<tr></tr>");
-						row.append("<td>"+ret[i][0]+"</td>")
-						row.append("<td>"+ret[i][1]+"</td>")
-						row.append("<td>"+ret[i][2]+"</td>")
-						$("#show").append(row);
+		$(function(){
+			$("#btn").click(function(){
+				var formdata = new FormData();
+				formdata.append('file',$("#file").prop('files')[0]);
+				formdata.append('sup',$('#sup').val());
+				formdata.append('con',$('#con').val());
+				$.ajax({
+					url: '{% url "datacode:upload1" %}',
+					type: 'POST',
+					data: formdata,
+					cache: false,
+					processData: false,
+					contentType: false,
+					success :function(ret){
+						a = ret[0]
+						b = ret[1]
+						$("#show").empty();
+						console.info(ret);
+					//频繁项集的结果刷新
+					for(var i = 0;i<a.length;i++){
+						for(var j =0;j<a[i].length;j++){
+							var row = $("<tr></tr>");
+							row.append("<td>{"+a[i][j][0]+"}</td>")
+							row.append("<td>"+a[i][j][1]+"</td>")
+							$("#show").append(row);
+						}
+						if(a[i].length==0){break;}	
 					}
-
+					//关联规则的结果刷新
+					for(var i in b){
+						var row = $("<tr></tr>")
+						for(var j = 0;j<b[i].length;j++){
+							if(j<=1){
+								row.append("<td>{"+b[i][j]+"}</td>")
+							}else{
+								row.append("<td>"+b[i][j]+"</td>")
+							}
+						}
+						row.appendTo($("#show2"))
+					}
 				}
 			});
+			});
 		});
-	});
-
+		function clickFile(){
+			$("input[type='file']").click();
+		}
 	</script>
 </body>
 </html>
