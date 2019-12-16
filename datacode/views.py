@@ -59,17 +59,14 @@ def sendfirstdata(request):
             settings.BASE_DIR, 'data.xlsx'), 1, [sup, con])
         a, b = (pro.start())
         # a返回的结果为频繁项集
-        print(b)
         result = []
         for keys in b:
             tmp = []
             tmp.append(list(list(keys)[0]))
             tmp.append(list(list(keys)[1]))
-            print(b[keys].keys())
             tmp.append(b[keys]['confidence：'])
             tmp.append(b[keys]['support:'])
             tmp.append(b[keys]['lift:'])
-            print(keys, b[keys])
             result.append(tmp)
         a = [a, result]
         return HttpResponse(json.dumps(a), content_type="application/json,charset=utf8")
