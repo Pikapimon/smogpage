@@ -26,12 +26,14 @@ class k_means:
         return self.r
 
     def getImg(self):  # 得到聚类图片
+
         tsne = TSNE()
         tsne.fit_transform(self.data_zs)  # 进行数据降维,并返回结果
         tsne = pd.DataFrame(
             tsne.embedding_, index=self.data_zs.index)  # 转换数据格式
         plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
         plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
+        plt.figure()
         keys = list(cnames.keys())
         pk = 'o'
         for i in range(self.k):
@@ -39,4 +41,10 @@ class k_means:
             plt.scatter(d[0], d[1], marker=pk,
                         color=keys[i], s=40, label=str(i))
         plt.legend(loc='best')    # 设置 图例所在的位置 使用推荐位置
-        return plt
+        from io import BytesIO
+        import base64
+        sio = BytesIO()
+        plt.savefig(sio, format='png')
+        data = base64.encodebytes(sio.getvalue()).decode()
+        html = 'data:image/png;base64,{} '
+        return html.format(data)

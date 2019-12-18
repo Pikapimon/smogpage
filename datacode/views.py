@@ -102,7 +102,6 @@ def sendsecdata(request):
             tmp.append(rules[keys]['lift'])
             result.append(tmp)
         ret.append(result)
-        print(rules)
         return HttpResponse(json.dumps(ret), content_type="application/json,charset=utf8")
     return render(request, 'datacode/total.html')
 
@@ -137,18 +136,11 @@ def sendforthdata(request):
         pro = process(acc_filename, 3, [
                       int(posted['kvalue'][0]), int(posted['times'][0])])
         result = pro.start()
-        print(result)
         table = result[0]
-        plt = result[1]
-        from io import BytesIO
-        import base64
-        sio = BytesIO()
-        plt.savefig(sio, format='png')
-        data = base64.encodebytes(sio.getvalue()).decode()
-        html = 'data:image/png;base64,{} '
+        html = result[1]
         ret = {}
         ret['table'] = table
-        ret['img'] = html.format(data)
+        ret['img'] = html
         return HttpResponse(json.dumps(ret))
 
 
@@ -162,17 +154,10 @@ def sendfifthdata(request):
         pro = process(acc_filename, 5, [int(posted['kvalue'][0])])
         result = pro.start()
         table_data = result[0].tolist()
-        plt = result[1]
-        from io import BytesIO
-        import base64
-        sio = BytesIO()
-        plt.savefig(sio, format='png')
-        data = base64.encodebytes(sio.getvalue()).decode()
-        html = 'data:image/png;base64,{} '
+        html = result[1]
         ret = {}
-        ret['img'] = html.format(data)
+        ret['img'] = html
         ret['table'] = table_data
-        print(type(table_data))
         return HttpResponse(json.dumps(ret))
 
 
@@ -193,7 +178,6 @@ def jianshu(request):
     sio = BytesIO()
     plt.savefig(sio, format='png')
     data = base64.encodebytes(sio.getvalue()).decode()
-    print(data)
     html = '''
        <html>
            <body>

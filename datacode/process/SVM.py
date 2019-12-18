@@ -50,7 +50,12 @@ class SVM:  # 需要训练样本和预测样本
         return html.format(data)
 
     def train(self):  # 使用训练数据和target进行训练
-        self.svm_cnf = svm.SVC(kernel=self.kernal, C=self.penalty_coefficient)
+        print(self.kernal)
+        if self.kernal == 'linear':
+            self.svm_cnf = svm.SVC(
+                kernel=self.kernal, C=self.penalty_coefficient)
+        else:
+            self.svm_cnf = svm.SVC(kernel=self.kernal)
         self.svm_cnf.fit(self.trainData, self.target)
         self.result = self.svm_cnf.predict(self.preData)  # 使用模型预测值
 
