@@ -8,6 +8,8 @@ from sklearn.manifold import TSNE
 from sklearn.metrics import roc_curve, auc  # 计算roc和auc
 from .cmap import *
 # 前端使用下拉框提供核函数选择，必须是标准的核函数名
+import matplotlib
+matplotlib.use("TKAgg")
 
 
 class SVM:  # 需要训练样本和预测样本
@@ -30,6 +32,8 @@ class SVM:  # 需要训练样本和预测样本
 
     def getPtsImg(self):  # 绘制trainData降维的散点图
         # print(self.target)
+        from io import BytesIO
+        import base64
         df = pd.DataFrame({'classes': self.target})
         tsne = TSNE(n_components=2, learning_rate=100).fit_transform(
             self.trainData)
@@ -39,7 +43,11 @@ class SVM:  # 需要训练样本和预测样本
             print(d[0], d[1])
             plt.scatter(d[:, 0], d[:, 1], label=str(i))
         plt.legend(loc='best')
-        return plt
+        sio = BytesIO()
+        plt.savefig(sio, format='png')
+        data = base64.encodebytes(sio.getvalue()).decode()
+        html = 'data:image/png;base64,{} '
+        return html.format(data)
 
     def train(self):  # 使用训练数据和target进行训练
         self.svm_cnf = svm.SVC(kernel=self.kernal, C=self.penalty_coefficient)
@@ -52,14 +60,16 @@ class SVM:  # 需要训练样本和预测样本
     def getHyperImg(self):
         df_target = pd.DataFrame({'classes': self.target})
         df_trainData = pd.DataFrame(self.trainData)
+        from io import BytesIO
+        import base64
         plt.figure(figsize=(6, 6))
         for i in range(len(self.classes)):
             d = df_trainData.values[df_target['classes'] == self.classes[i]]
             plt.scatter(d[:, 0], d[:, 1], label=str(self.classes[i]))
             # if self.target[i]==self.classes[0]:
-            # 	plt.scatter(self.trainData[i][0],self.trainData[i][1],label=str(self.classes[0]))
+            #   plt.scatter(self.trainData[i][0],self.trainData[i][1],label=str(self.classes[0]))
             # else:
-            # 	plt.scatter(self.trainData[i][0],self.trainData[i][1],label=str(self.classes[1]))
+            #   plt.scatter(self.trainData[i][0],self.trainData[i][1],label=str(self.classes[1]))
         for j in self.svm_cnf.support_:
             plt.scatter(self.trainData[j][0], self.trainData[j][1],
                         s=100, c='', alpha=0.5, linewidth=1.5, edgecolor='red')
@@ -69,13 +79,19 @@ class SVM:  # 需要训练样本和预测样本
         y = (W[0][0]*x+b)/(-1*W[0][1])
         plt.scatter(x, y, s=5, marker='h')
         plt.legend(loc='best')
-        return plt
+        sio = BytesIO()
+        plt.savefig(sio, format='png')
+        data = base64.encodebytes(sio.getvalue()).decode()
+        html = 'data:image/png;base64,{} '
+        return html.format(data)
 
     def getROC(self):
         fpr, tpr, threshold = roc_curve(
             self.test_target, self.result)  # 计算真正率和假正率
         roc_auc = auc(fpr, tpr)  # 计算auc的值
         lw = 2
+        from io import BytesIO
+        import base64
         plt.figure(figsize=(6, 6))
         plt.plot(fpr, tpr, color='darkorange',
                  lw=lw, label='ROC curve (area = %0.2f)' % roc_auc)  # 假正率为横坐标，真正率为纵坐标做曲线
@@ -86,4 +102,8 @@ class SVM:  # 需要训练样本和预测样本
         plt.ylabel('True Positive Rate')
         plt.title('ROC')
         plt.legend(loc="lower right")
-        return plt
+        sio = BytesIO()
+        plt.savefig(sio, format='png')
+        data = base64.encodebytes(sio.getvalue()).decode()
+        html = 'data:image/png;base64,{} '
+        return html.format(data)

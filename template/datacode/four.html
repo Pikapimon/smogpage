@@ -24,31 +24,66 @@
 						<input type="file" name="" class="form-control" id="file" style="display: none;">
 						<button type="button" class='btn btn-outline-secondary' onclick="clickFile()">上传文件</button>
 					</div>
-					<div class="col-3"><input type="text" class="form-control" placeholder="输入K值"></div>
-					<div class="col-3"><input type="text" class="form-control" placeholder="输入最大迭代次数"></div>
+					<div class="col-3"><input type="text" class="form-control" placeholder="输入K值" id="kvalue"></div>
+					<div class="col-3"><input type="text" class="form-control" placeholder="输入最大迭代次数" id="times"></div>
 					<div class="col-3 text-center"><button type="button" class="btn btn-success" id="btn">提交</button></div>
 				</div>
 			</form>
 		</div>
 	</div>
-
+	<div class="container">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h3>聚类可视化</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 text-center">
+				<img src="" alt="" id="img">
+			</div>
+		</div>
+	</div>
+	<div class="container" style="padding-top:50px;">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1>分类结果</h1>
+				<table class="table table-hover table-striped table-bordered">
+					<thead>
+						<tr><th>序号</th><th>纬度1</th><th>维度2</th><th>类别号</th></tr>
+					</thead>
+					<tbody id='show'>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 
 </body>
 <script>
 $(function(){
 	$("#btn").click(function(){
-
 		var form_data = new FormData();
 		form_data.append("file" , $("#file").prop("files")[0]);
+		form_data.append('kvalue',$("#kvalue").val());
+		form_data.append('times',$("#times").val());
 		$.ajax({
 			type : "POST",
-			url : "{% url 'datacode:thpage' %}",
+			url : "{% url 'datacode:upload4' %}",
 			data : form_data,
 			processData : false,
 			contentType : false,
 			success : function(ret){
 				ret = JSON.parse(ret);
-				console.info(ret);
+				$("#img").attr('src',ret['img'])
+				table_data = ret['table']
+				for (var i = 0;i<table_data.length;i++){
+					row = $("<tr></tr>")
+					row.append("<td>"+i+"</td>")
+					for(var j = 0;j<3;j++){
+						row.append("<td>"+table_data[i][j]+"</td>")
+					}
+					$("#show").append(row)
+				}
 			}
 		});
 

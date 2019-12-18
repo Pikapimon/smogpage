@@ -1,12 +1,12 @@
 class Node:
-	def __init__(self,n,o,p):
+	def __init__(self,n,o,p):#name,频繁度,前驱
 		self.name=n
 		self.parent=p
 		self.children={}
 		self.weight=o#频繁度值
 		self.tree={}#生成的fp tree
 		self.next=None#相似元素连接
-	def addWeight(self,w):
+	def inc(self,w):
 		self.weight+=w
 	def get_tree_dict(self):
 		ret={}

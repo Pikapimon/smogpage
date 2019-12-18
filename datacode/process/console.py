@@ -2,7 +2,7 @@ from .FP_Growth import *
 from .k_means import *
 from .apriori import *
 from .SVM import *
-
+from .k_medoids import *
 import pandas as pd
 import xlrd
 import numpy as np
@@ -47,17 +47,17 @@ class process:
             retDic[l[key]] = r[key]
         return result, retDic  # 返回频繁项集、关联信息
 
-    def k_means(self, dataList, iteration, k):
+    def k_means(self, dataList,  k, iteration):
         km = k_means(k, iteration, dataList)
-        classInfo = km.getOutPut()
+        classInfo = tranDF2list(km.getOutPut())
         plt = km.getImg()
         return classInfo, plt
 
     def FP_Growth(self, dataList, min_sup, min_conf):
-        fp = FP_Growth(dataList, min_sup, min_conf)
-        freqSet, tree = fp.get_freq_sets()
+        freqSet, tree = FP_Growth(dataList, min_sup)
+        rules = rule_gen(freqSet, len(dataList), min_conf)
         # print(freqSet)
-        return freqSet, tree
+        return freqSet, rules, tree
 
     def SVM(self, dataList, paras):  # 使用SVM进行二分类
         length = len(dataList)
@@ -75,9 +75,9 @@ class process:
         plt_Hyper = svm.getHyperImg()
         if need_ROC == 1:
             ROC = svm.getROC()
-            return result, plt, plt_Hyper, ROC
+            return result, plt_raw, plt_Hyper, ROC
         else:
-            return result, plt, plt_Hyper
+            return result, plt_raw, plt_Hyper
 
     def k_medoids(self, dataList, k):
         kct = k_medoids(dataList, k)
@@ -104,48 +104,9 @@ class process:
             elif sheets == 1:
                 self.dataList = [tranDF2list(self.DF[0])]
         else:
-            self.dataList = self.DF
+            self.dataList = self.DF[1]
 
 
 if __name__ == '__main__':
     pro = process('data.xlsx', 1, [0.4, 0.4])
     print(pro.start()[0])
-
-
-# print(DF)
-# dataList=[]
-# for i in range(1,sheet.nrows):
-#     arr=[]
-#     for j in range(1,sheet.ncols):
-#         if sheet.cell(i,j).value!='':
-#            arr.append(sheet.cell(i,j).value)
-#     dataList.append(arr)
-
-# dataList为一个二维list
-# if flag==1:#此时使用apriori进行关联性分析
-#   dataList=tranDF2list(DF)
-#           print(dataList)
-#           ap=apriori(dataList,2/6,0.6)
-#           ap.start()
-#           result=ap.getOutCome();
-#           ap.rule_gen()
-#           l,r=ap.getRule()
-#           for i in result:
-#               print(i)
-#           for key in l:
-#               print(l[key],"=>",r[key])
-# if flag==2:#使用fpgrowth方法进行关联性分析
-#   dataList=tranDF2list(DF)
-#   fp=FP_Growth(dataList,2,0.6)
-#   # fp.createTree()
-#   freq,treeDic=fp.get_freq_sets()
-#   print(freq)
-#   print(treeDic)
-#   # print(treeDic)
-#   # print(fp.get_FP_Tree())
-# if flag==3:#使用k-means聚类 最多支持二维数据聚类返回图片，高维不返回图片
-#   km=k_means(3,3,DF)
-#   print(km.getOutPut())
-#   km.getImg().show()
-
-# SVM和PAM

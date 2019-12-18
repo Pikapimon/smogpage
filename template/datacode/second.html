@@ -8,60 +8,110 @@
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-			
-			<div class="container">
-				<div class="row">
-					<form>
-					<input type="file" name="" class="col-md-6 col-sm-8 form-control" id="file">
-					</form>
-				</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<form  enctype="multipart/form-data">
+					<div class="row">
+						<div class="col-2">
+							<input type="file" name="" class="form-control" id="file" style="display: none;">
+							<button type="button" class='btn btn-outline-secondary' onclick="clickFile()">上传文件</button>
+						</div>
+						<div class="col-3">
+							<input type="text" placeholder="输入最小支持度" class="form-control" id = 'sup'>
+						</div>
+						<div class="col-3">
+							<input type="text" placeholder="输入最小置信度" class="form-control" id="con">
+						</div>
+						<div class="col-1 text-center">
+							<button type="button" class="btn btn-success" id="btn">提交</button>
+						</div>
+					</div>
+				</form>			
 			</div>
-			<div class="col-md-4 col-sm-8" style="margin: 0;padding: 0;">
+		</div>
+	</div>
+
+
+	<div class="container" style="padding-top:50px;">
+		<div class="row">
+			<div class="col-12">
+				<h1>频繁项集</h1>
+				<table class="table table-hover table-striped table-bordered">
+					<thead>
+						<tr><th>频繁项集</th><th>频数</th></tr>
+					</thead>
+					<tbody id='show'>
+					</tbody>
+				</table>
+				<h1>关联规则</h1>
+				<table class="table table-hover table-striped table-bordered">
+					<thead>
+						<tr><th>项集1</th><th>项集2</th><th>置信度</th><th>支持度</th><th>提升系数</th></tr>
+					</thead>
+					<tbody id='show2'>
+					</tbody>
+				</table>
 			</div>
-			<div class="input-group col-md-2 col-sm-3">
-				<span class="input-group-addon">K值</span>
-				<input type="text" name="" class="form-control" id="Kvalue">
-			</div>
-			<div class="col-md-3 col-sm-3"  style="display: inline-block;">
-				<select class="form-control" id="selectfunction">
-					<option>K-means</option>
-					<option>PAM</option>			
-				</select>
-			</div>
-			<div class="col-2">
-			<button class="btn btn-success" style="margin-left: 20px;" id="btn">提交</button>
-			</div>
-	<img src="" class="img-thumbnail imgstyle">
+		</div>
+	</div>
 
 
 	<style type="text/css">
-		.imgstyle{
-			height: 430px;
-			width: 650px;
-		}
+	.imgstyle{
+		height: 430px;
+		width: 650px;
+	}
 	</style>
 	
 	<script>
-		$(function(){
-			$("#btn").click(function(){
-				var form_data = new FormData();
-				form_data.append('function',$("#selectfunction").val());
-				form_data.append('Kvalue',$("#Kvalue").val());
-				form_data.append('file',$("#file").prop("files")[0]);
-				$.ajax({
-					type : 'POST',
-					url : "{% url 'datacode:secpage' %}",
-					data : form_data,
-					processData : false,
-					contentType : false,
-					success : function(result){
-						alert(result)
+	$(function(){
+		$("#btn").click(function(){
+			var formdata = new FormData();
+			formdata.append('file',$("#file").prop('files')[0]);
+			formdata.append('sup',$('#sup').val());
+			formdata.append('con',$('#con').val());
+			$.ajax({
+				type : 'POST',
+				url : "{% url 'datacode:upload2' %}",
+				data : formdata,
+				processData : false,
+				contentType : false,
+				success : function(ret){
+					a = ret[0]
+					b = ret[1]
+					$("#show").empty();
+					$("#show2").empty();
+					console.info(b);
+					//频繁项集的结果刷新
+					for(var i = 0;i<a.length;i++){
+						var row = $("<tr></tr>");
+						row.append("<td>{"+a[i][0]+"}</td>")
+						row.append("<td>"+a[i][1]+"</td>")
+						$("#show").append(row);
 					}
-				})
-			});
+					//关联规则的结果刷新
+					for(var i in b){
+						var row = $("<tr></tr>")
+						if(b[i].length<4){continue;}
+						for(var j = 0;j<b[i].length;j++){
+							if(j<=1){
+								row.append("<td>{"+b[i][j]+"}</td>")
+							}else{
+								row.append("<td>"+b[i][j]+"</td>")
+							}
+						}
+						row.appendTo($("#show2"))
+					}
+				}
+			})
 		});
-		
+	});
 
+	function clickFile(){
+		$("input[type='file']").click();
+	}
 	</script>
 
 </body>

@@ -11,7 +11,10 @@ urlpatterns = [
     path('fifth/', views.five, name='fifth_frame'),
 
     path('sendfirstdata/', views.sendfirstdata, name='upload1'),
-    path('sendsecdata/', views.sendsecdata, name='secpage'),
-    path('senthirddata/', views.sendthirddata, name='thpage'),
+    path('sendsecdata/', views.sendsecdata, name='upload2'),
+    path('sendhirddata/', views.sendthirddata, name='upload3'),
+    path('sendforthdata/', views.sendforthdata, name='upload4'),
+    path('sendfifthdata/', views.sendfifthdata, name='upload5'),
+    path('jianshu/', views.jianshu, name='getimg')
 
 ]
