@@ -15,9 +15,16 @@ class Node:
 		return ret
 	def dict_gen(self,root):#使用根结点的children生成所有的
 		ret={}
+		t=0
+
+		# if not root:
+		# 	return {0:'^',1:'^'}
 		for i in root:
-			ret[i]=self.dict_gen(root[i].children)
-		# print(ret)
+			if len(root[i].children)!=0:
+				ret[t]={i+':'+str(root[i].weight):self.dict_gen(root[i].children)}
+			else:
+				ret[t]=i+':'+str(root[i].weight)
+			t+=1
 		return ret
 
 

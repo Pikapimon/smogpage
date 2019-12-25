@@ -1,4 +1,4 @@
-from .FP_Growth import *
+from .newFP import *
 from .k_means import *
 from .apriori import *
 from .SVM import *
@@ -7,6 +7,7 @@ import pandas as pd
 import xlrd
 import numpy as np
 from .DFTools import *
+from .getRules import *
 # 本console文件也将被写成函数形式
 # book = xlrd.open_workbook("data1.xlsx")
 # sheet=book.sheets()[0]
@@ -54,10 +55,10 @@ class process:
         return classInfo, plt
 
     def FP_Growth(self, dataList, min_sup, min_conf):
-        freqSet, tree = FP_Growth(dataList, min_sup)
-        rules = rule_gen(freqSet, len(dataList), min_conf)
-        # print(freqSet)
-        return freqSet, rules, tree
+        freq, tree = FP_Growth(dataList, min_sup)
+        rules = rule_gen(freq, len(dataList), min_conf)
+        treeplt = getTreePlt(tree)
+        return freq, rules, treeplt
 
     def SVM(self, dataList, paras):  # 使用SVM进行二分类
         length = len(dataList)

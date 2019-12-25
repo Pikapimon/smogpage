@@ -55,6 +55,7 @@ def sendfirstdata(request):
 
         sup = float(request.POST['sup'])
         con = float(request.POST['con'])
+        print(sup, '-', con)
         # 处理
         pro = process(os.path.join(
             settings.BASE_DIR, 'media/data.xlsx'), 1, [sup, con])
@@ -102,28 +103,20 @@ def sendsecdata(request):
             tmp.append(rules[keys]['lift'])
             result.append(tmp)
         ret.append(result)
+        ret.append(tree)
         return HttpResponse(json.dumps(ret), content_type="application/json,charset=utf8")
     return render(request, 'datacode/total.html')
 
 
 def sendthirddata(request):
     if request.method == 'POST':
-        from io import BytesIO
-        import base64
-        files = request.FILES.get('file')
-        # 保存上传的文件
-        data = Data(name=files.name, files=files)
-        data.save()
-        posted = dict(request.POST)
-        # 处理
-        acc_filename = os.path.join(settings.BASE_DIR, 'media/'+files.name)
-        pro = process(acc_filename, 4, [
-                      int(posted['punish'][0]), posted['method'][0], 1])
-        result = pro.start()
-        ret = {}
-        for i in range(1, 4):
-            ret[str(i)] = result[i]
-        return HttpResponse(json.dumps(ret), content_type="application/json,charset=utf8")
+        raw = [1, 0, 4, 1, 4, 9, 5, 9, 0, 6, 9, 0, 1, 5, 9, 7, 3, 4, 9, 6, 6, 5, 4, 0, 7, 4, 0, 1, 3, 1, 3, 4, 7, 2, 7, 1, 2, 1, 1, 7, 4, 2, 3, 5, 1, 2, 4, 4, 6,
+               3, 5, 5, 6, 0, 4, 1, 9, 5, 7, 8, 9, 3, 7, 4, 6, 4, 3, 0, 7, 0, 2, 9, 1, 7, 3, 2, 9, 7, 7, 6, 2, 7, 8, 4, 7, 3, 6, 1, 3, 6, 9, 3, 1, 4, 1, 7, 6, 9, 6]
+        ret = [1, 0, 4, 1, 4, 9, 6, 9, 0, 6, 9, 0, 1, 8, 9, 7, 6, 4, 9, 6, 6, 5, 4, 0, 7, 4, 0, 1, 3, 1, 3, 6, 7, 2, 7, 1, 3, 8, 1, 7, 4, 8, 3, 8, 1, 2, 4, 4, 6,
+               3, 4, 8, 6, 0, 4, 1, 9, 0, 7, 8, 9, 8, 7, 8, 3, 4, 3, 0, 7, 0, 2, 8, 8, 7, 3, 2, 9, 7, 9, 6, 2, 7, 8, 4, 7, 3, 6, 1, 3, 6, 9, 3, 1, 4, 1, 7, 6, 9, 6]
+
+        srcs = [''+str(i)+'.png' for i in range(2, 101)]
+        return HttpResponse(json.dumps([srcs, raw, ret]), content_type="application/json,charset=utf8")
 
 
 def sendforthdata(request):

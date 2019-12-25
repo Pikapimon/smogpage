@@ -31,10 +31,14 @@
 				</form>			
 			</div>
 		</div>
+		<div class="row">
+			<img src="" alt="" id="imgshow" style="height:500px;">
+		</div>
 	</div>
 
 
 	<div class="container" style="padding-top:50px;">
+		<div class="row text-center" id="tree"></div>
 		<div class="row">
 			<div class="col-12">
 				<h1>频繁项集</h1>
@@ -81,6 +85,7 @@
 				success : function(ret){
 					a = ret[0]
 					b = ret[1]
+					$("#imgshow").attr('src',ret[2])
 					$("#show").empty();
 					$("#show2").empty();
 					console.info(b);
