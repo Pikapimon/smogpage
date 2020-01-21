@@ -117,6 +117,12 @@ def sendthirddata(request):
 
         srcs = [''+str(i)+'.png' for i in range(2, 101)]
         return HttpResponse(json.dumps([srcs, raw, ret]), content_type="application/json,charset=utf8")
+    else:
+        c = int(POST['punish'])
+        gama = float(POST['gama'])
+        core = POST['method']
+        p = process(None, 4, ['imgs/digits/test/', [str(i) +
+                                                    '.png' for i in range(2, 101)], [c, core, gama]])
 
 
 def sendforthdata(request):
