@@ -21,7 +21,7 @@
 				<input type="file" name="" class="form-control" id="file" style="display: none;">
 				<button type="button" class='btn btn-outline-secondary' onclick="clickFile()">上传文件</button>
 			</div>
-			<div class="col-4" style="">
+			<div class="col-4" style="display:none">
 				<div class="row">
 					<div class="col-4"><h3><label for="method"  style="display:inline-block">核函数</label></h3></div>
 					<div class="col-6">
@@ -36,8 +36,8 @@
 			</div>
 
 
-			<div class="col-2" style=""><input type="text" id="punish" class="form-control" placeholder="输入惩罚系数c"></div>
-			<div class="col-2"><input type="text" id="corepara" class="form-control" placeholder="核函数系数"></div>
+			<div class="col-2" style="display:none"><input type="text" id="punish" class="form-control" placeholder="输入惩罚系数"></div>
+
 
 			<div class="col-2 text-center">	<button type="button" class="btn btn-success" id="btn">查看训练结果</button>
 			</div>
@@ -55,7 +55,6 @@ $(function(){
 		form_data.append("file" , $("#file").prop("files")[0]);
 		form_data.append('method',$("#method option:selected").val());
 		form_data.append('punish',$("#punish").val());
-		form_data.append('gama',$("#corepara").val());
 		$.ajax({
 			type : "POST",
 			url : "{% url 'datacode:upload3' %}",
