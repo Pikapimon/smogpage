@@ -27,5 +27,4 @@ urlpatterns = [
     path('control', admin.site.urls),
     path('polls/', include('polls.urls')),
     path('prediction/', include('prediction.urls')),
-    path('datacode/', include('datacode.urls')),
 ]
